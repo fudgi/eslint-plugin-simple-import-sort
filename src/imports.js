@@ -63,7 +63,9 @@ module.exports = {
       "Program:exit": () => {
         for (const parent of parents) {
           for (const chunk of shared.extractChunks(parent, (node) =>
-            isImport(node) ? "PartOfChunk" : "NotPartOfChunk",
+            isImport(node) || isLazyLoading(node)
+              ? "PartOfChunk"
+              : "NotPartOfChunk",
           )) {
             maybeReportChunkSorting(chunk, context, outerGroups);
           }
@@ -132,12 +134,24 @@ function makeSortedItems(items, outerGroups) {
 
 // Exclude "ImportDefaultSpecifier" – the "def" in `import def, {a, b}`.
 function getSpecifiers(importNode) {
-  return importNode.specifiers.filter((node) => isImportSpecifier(node));
+  return (
+    importNode.specifiers &&
+    importNode.specifiers.filter((node) => isImportSpecifier(node))
+  );
 }
 
 // Full import statement.
 function isImport(node) {
   return node.type === "ImportDeclaration";
+}
+
+// Full lazy loading statement.
+function isLazyLoading(node) {
+  return (
+    node.type === "VariableDeclaration" &&
+    node.declarations[0].init.type === "CallExpression" &&
+    node.declarations[0].init.callee.name === "lazy"
+  );
 }
 
 // import def, { a, b as c, type d } from "A"
@@ -151,6 +165,7 @@ function isImportSpecifier(node) {
 // And not: import type {} from "setup"
 function isSideEffectImport(importNode, sourceCode) {
   return (
+    importNode.specifiers &&
     importNode.specifiers.length === 0 &&
     (!importNode.importKind || importNode.importKind === "value") &&
     !shared.isPunctuator(sourceCode.getFirstToken(importNode, { skip: 1 }), "{")

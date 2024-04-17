@@ -801,7 +801,13 @@ function isNewline(node) {
 }
 
 function getSource(node) {
-  const source = node.source.value;
+  let source;
+
+  if (node.type === "VariableDeclaration") {
+    source = node.declarations[0].init.arguments[0].body.source.value;
+  } else {
+    source = node.source.value;
+  }
 
   return {
     // Sort by directory level rather than by string length.
