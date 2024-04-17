@@ -5,7 +5,7 @@ const exportsRule = require("./exports");
 
 module.exports = {
   meta: {
-    name: "eslint-plugin-simple-import-sort",
+    name: "@fudgi-packages/eslint-plugin-simple-import-sort",
     version: "%VERSION%",
   },
   rules: {

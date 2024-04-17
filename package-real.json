@@ -1,6 +1,6 @@
 {
-  "name": "eslint-plugin-simple-import-sort-lazy",
-  "version": "1.0.1",
+  "name": "@fudgi-packages/eslint-plugin-simple-import-sort",
+  "version": "1.0.3",
   "license": "MIT",
   "author": "Simon Lydell, Andrew Seldyukov",
   "repository": "fudgi/eslint-plugin-simple-import-sort",
