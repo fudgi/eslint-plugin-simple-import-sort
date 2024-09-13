@@ -152,7 +152,8 @@ function isLazyLoading(node) {
     node.declarations &&
     node.declarations[0].init &&
     node.declarations[0].init.type === "CallExpression" &&
-    node.declarations[0].init.callee.name === "lazy"
+    (node.declarations[0].init.callee.name === "lazy"||
+    node.declarations[0].init.callee.name === "dynamic")
   );
 }
 

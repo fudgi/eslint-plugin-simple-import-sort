@@ -1,6 +1,6 @@
 {
   "name": "@fudgi-packages/eslint-plugin-simple-import-sort",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "author": "Simon Lydell, Andrew Seldyukov",
   "repository": "fudgi/eslint-plugin-simple-import-sort",
